@@ -9,7 +9,7 @@
 import UIKit
 import MoviesKit
 
-let kApiKey = "03feb58bd1b21fa9943cf0fda5ea8f71"
+let kApiKeyUserDefaultsKey = "ApiKeyUserDefaultsKey"
 let kImageDownloadURLPrefix = "https://image.tmdb.org/t/p/w500";
 let kDefaultMoviesFilterString = "Batman"
 
@@ -23,7 +23,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     let searchController = UISearchController(searchResultsController: nil)
     
     var movies = [IMovie]()
-    let moviesDownloader = MKMoviesDownloader(apiKey: kApiKey)
+    var moviesDownloader: MKMoviesDownloader?
     
     // MARK: - Lifecycle methods
     override func viewDidLoad() {
@@ -36,11 +36,17 @@ class ViewController: UIViewController, UITableViewDelegate {
         navigationItem.searchController = searchController
         definesPresentationContext = true
 
+        // Initialize the MovieDownloader with API Key
+        if let apiKey = self.getAPIKey() {
+            moviesDownloader = MKMoviesDownloader(apiKey: apiKey)
+        } else {
+            moviesDownloader = MKMoviesDownloader()
+        }
+        
         // Initially load the default filter
         self.filterContentForSearchText(kDefaultMoviesFilterString)
         
         posterImageCache.countLimit = 20
-        
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -56,20 +62,48 @@ class ViewController: UIViewController, UITableViewDelegate {
     }
     
     @IBAction func showSettingsScreen(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "Enter API Key", message: "Please enter the 32 char API Key.", preferredStyle: UIAlertControllerStyle.alert)
+        var message = "Please enter the 32 char API Key."
+        if let apiKey = self.getAPIKey() {
+            message = """
+            Existing API Key is \(apiKey)
+            
+            Please enter a new API key, if you wish to change.
+            """
+        }
+            
+        let alert = UIAlertController(title: "Enter API Key", message: message, preferredStyle: UIAlertControllerStyle.alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
         let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.default) { (alertAction) in
-            
+            let textField = alert.textFields?.first
+            if (textField?.text?.count)! > 0 {
+                self.saveAPIKey((textField?.text)!)
+                self.filterContentForSearchText(kDefaultMoviesFilterString)
+            }
         }
         alert.addAction(saveAction)
         alert.addAction(cancelAction)
         alert.addTextField { (textField) in
-            textField.placeholder = "Existing API key"
+            textField.placeholder = "Enter API Key here"
         }
         self.present(alert, animated: true)
     }
     
     // MARK: - Private instance methods
+    func saveAPIKey(_ apiKey:String) {
+        self.moviesDownloader?.setAPIKey(apiKey)
+        let encryptedApiKey = Crypto.encrypt(input: apiKey)
+        UserDefaults.standard.set(encryptedApiKey, forKey: kApiKeyUserDefaultsKey)
+        UserDefaults.standard.synchronize()
+    }
+    
+    func getAPIKey() -> String! {
+        if let encryptedApiKey = UserDefaults.standard.object(forKey: kApiKeyUserDefaultsKey) {
+            let apiKey = Crypto.decrypt(input: encryptedApiKey as! String)
+            return apiKey
+        }
+        return nil
+    }
+    
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
         self.showLoading()
         self.moviesDownloader?.downloadLatestMovies(forSearchFilter: searchText) { (error, movies) in

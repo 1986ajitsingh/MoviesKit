@@ -16,6 +16,7 @@
 		743E7DFC20EC8BC200172A64 /* MoviesKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 743E7DF920EC8BA200172A64 /* MoviesKit.framework */; };
 		743E7DFD20EC8BC200172A64 /* MoviesKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 743E7DF920EC8BA200172A64 /* MoviesKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		743E7E4020EF465200172A64 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E3F20EF465200172A64 /* MovieCell.swift */; };
+		743E7E4520EFEEB400172A64 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E4420EFEEB400172A64 /* Crypto.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		743E7DEA20EC8AEC00172A64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		743E7DF320EC8BA200172A64 /* MoviesKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MoviesKit.xcodeproj; path = ../MoviesKit/MoviesKit.xcodeproj; sourceTree = "<group>"; };
 		743E7E3F20EF465200172A64 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
+		743E7E4420EFEEB400172A64 /* Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 			children = (
 				743E7DD320EC8AEB00172A64 /* AppDelegate.swift */,
 				743E7DD520EC8AEB00172A64 /* ViewController.swift */,
+				743E7E4420EFEEB400172A64 /* Crypto.swift */,
 				743E7E3F20EF465200172A64 /* MovieCell.swift */,
 				743E7DD720EC8AEB00172A64 /* Main.storyboard */,
 				743E7DDA20EC8AEB00172A64 /* Assets.xcassets */,
@@ -274,6 +277,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				743E7E4520EFEEB400172A64 /* Crypto.swift in Sources */,
 				743E7DD620EC8AEB00172A64 /* ViewController.swift in Sources */,
 				743E7DD420EC8AEB00172A64 /* AppDelegate.swift in Sources */,
 				743E7E4020EF465200172A64 /* MovieCell.swift in Sources */,
