@@ -49,6 +49,17 @@ class ViewController: UIViewController, UITableViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - IBActions
+    @IBAction func showInfoScreen(_ sender: UIBarButtonItem) {
+        let infoController = self.storyboard?.instantiateViewController(withIdentifier: "InfoScreen")
+        self.navigationController?.pushViewController(infoController!, animated: true)
+    }
+    
+    
+    @IBAction func showSettingsScreen(_ sender: UIBarButtonItem) {
+        
+    }
+    
     // MARK: - Private instance methods
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
         self.showLoading()
