@@ -223,4 +223,8 @@
 -(void)onFailureDueToInvalidResponse {
     [self sendErrorResponseOnMainThread:DOWNLOAD_FAILED_ERROR_DOMAIN andErrorCode:INVALID_RESPONSE_ERROR andUserInfo:nil];
 }
+
+-(void)onFailureDueToInvalidAPIKey {
+    [self sendErrorResponseOnMainThread:DOWNLOAD_FAILED_ERROR_DOMAIN andErrorCode:INVALID_API_KEY_ERROR andUserInfo:nil];
+}
 @end

@@ -55,9 +55,18 @@ class ViewController: UIViewController, UITableViewDelegate {
         self.navigationController?.pushViewController(infoController!, animated: true)
     }
     
-    
     @IBAction func showSettingsScreen(_ sender: UIBarButtonItem) {
-        
+        let alert = UIAlertController(title: "Enter API Key", message: "Please enter the 32 char API Key.", preferredStyle: UIAlertControllerStyle.alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
+        let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.default) { (alertAction) in
+            
+        }
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        alert.addTextField { (textField) in
+            textField.placeholder = "Existing API key"
+        }
+        self.present(alert, animated: true)
     }
     
     // MARK: - Private instance methods
@@ -94,6 +103,8 @@ class ViewController: UIViewController, UITableViewDelegate {
             return "Network Error. Please try again later."
         case INVALID_RESPONSE_ERROR:
             return "Invalid response. Please try again."
+        case INVALID_API_KEY_ERROR:
+            return "API Key is not valid. Please enter a valid API Key."
         case RESPONSE_PARSING_ERROR:
             return "Error parsing response. Please try again."
         case NO_MOVIES_FOUND_MATCHING_SEARCH_FILTER:

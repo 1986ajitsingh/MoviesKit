@@ -58,6 +58,10 @@
                 if ([self.delegate respondsToSelector:@selector(onSuccessWithData:andQueryString:andYear:)] && !self.isCancelled) {
                     [self.delegate onSuccessWithData:data andQueryString:self.queryString andYear:self.year];
                 }
+            } else if (httpResponse.statusCode == 401) {
+                if ([self.delegate respondsToSelector:@selector(onFailureDueToInvalidAPIKey)] && !self.isCancelled) {
+                    [self.delegate onFailureDueToInvalidAPIKey];
+                }
             } else {
                 if ([self.delegate respondsToSelector:@selector(onFailureDueToInvalidResponse)] && !self.isCancelled) {
                     [self.delegate onFailureDueToInvalidResponse];

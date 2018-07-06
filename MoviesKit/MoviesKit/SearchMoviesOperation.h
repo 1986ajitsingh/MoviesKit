@@ -16,6 +16,7 @@
 -(void)onSuccessWithData:(NSData*) responseData andQueryString:(NSString*)queryString andYear:(NSString*)year;
 -(void)onFailureDueToNetworkError;
 -(void)onFailureDueToInvalidResponse;
+-(void)onFailureDueToInvalidAPIKey;
 @end
 
 @interface SearchMoviesOperation : NSOperation
