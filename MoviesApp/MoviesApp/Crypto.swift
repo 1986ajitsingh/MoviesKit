@@ -8,8 +8,14 @@
 
 import UIKit
 
+// Note: 
+// Since as per the assignment requirenments, I have to use only core foundation
+// or foundation class, and also I cannot use any third part libs, I am
+// implementing custom crypto funcitons.
+
 // Crypto is a custom encryption method, that encrypts the input string by -
-// 1. incrementing each character's ascii value by 32
+// 1. incrementing each character's ascii value by 32. Since ascii characters
+// range from 0 to 127, we are rolling them when incrementing
 // 2. XORing the ascii value of each character with 32
 class Crypto: NSObject {
     static func encrypt(input: String) -> String {

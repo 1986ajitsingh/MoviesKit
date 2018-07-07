@@ -15,6 +15,10 @@ let kDefaultMoviesFilterString = "Batman"
 
 let posterImageCache = NSCache<AnyObject, AnyObject>()
 
+// todo: add movie details screen
+// todo: add jailbroken check on settings button click and when reading
+// apikey from Userdefaults
+
 class ViewController: UIViewController, UITableViewDelegate {
 
     // MARK: - Properties
@@ -71,7 +75,7 @@ class ViewController: UIViewController, UITableViewDelegate {
             """
         }
             
-        let alert = UIAlertController(title: "Enter API Key", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Configuration View", message: message, preferredStyle: UIAlertControllerStyle.alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
         let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.default) { (alertAction) in
             let textField = alert.textFields?.first

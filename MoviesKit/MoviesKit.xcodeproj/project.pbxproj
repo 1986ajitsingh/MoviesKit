@@ -18,6 +18,8 @@
 		743E7E3720EE023000172A64 /* libSortMovies.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 743E7E3520EE020B00172A64 /* libSortMovies.a */; };
 		743E7E3C20EE95A200172A64 /* SearchMoviesOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 743E7E3A20EE95A200172A64 /* SearchMoviesOperation.h */; };
 		743E7E3D20EE95A200172A64 /* SearchMoviesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E3B20EE95A200172A64 /* SearchMoviesOperation.m */; };
+		743E7E4820F08CAF00172A64 /* MovieTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E4720F08CAF00172A64 /* MovieTests.m */; };
+		743E7E4A20F0916100172A64 /* Movie.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E1420ECA58B00172A64 /* Movie.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,7 @@
 		743E7E3020EE020B00172A64 /* SortMovies.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SortMovies.xcodeproj; path = ../SortMovies/SortMovies.xcodeproj; sourceTree = "<group>"; };
 		743E7E3A20EE95A200172A64 /* SearchMoviesOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchMoviesOperation.h; sourceTree = "<group>"; };
 		743E7E3B20EE95A200172A64 /* SearchMoviesOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchMoviesOperation.m; sourceTree = "<group>"; };
+		743E7E4720F08CAF00172A64 /* MovieTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MovieTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				743E7D7320EC7E6300172A64 /* MoviesKitTests.m */,
+				743E7E4720F08CAF00172A64 /* MovieTests.m */,
 				743E7D7520EC7E6300172A64 /* Info.plist */,
 			);
 			path = MoviesKitTests;
@@ -291,6 +295,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				743E7E4A20F0916100172A64 /* Movie.m in Sources */,
+				743E7E4820F08CAF00172A64 /* MovieTests.m in Sources */,
 				743E7D7420EC7E6300172A64 /* MoviesKitTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

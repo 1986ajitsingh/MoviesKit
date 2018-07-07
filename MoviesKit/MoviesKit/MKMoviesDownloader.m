@@ -93,7 +93,7 @@
         }
         
         // Use C library function to sort movies
-        sortMovies(movies, self->downloadRawResults.count);
+        sortMovies(movies, results.count);
         
         // From sorted movies, create Movie class objects for 10 or less.
         // Then release the rest of the MovieInfo objects (if any)
@@ -111,12 +111,16 @@
         [self->downloadRawResults removeAllObjects];
         free(movies);
         
-        dispatch_async(dispatch_get_main_queue(), ^(void) {
-            self->_isDownloading = false;
-            // return the final 10 or less objects to the completion block.
-            self->_completionHandler(nil, (NSArray<IMovie> *)topRated10OrLessMovies);
-        });
+        [self finishWithFinalMoviesList:topRated10OrLessMovies];
     }
+}
+
+-(void)finishWithFinalMoviesList:(NSArray*)finalMoviesList {
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        self->_isDownloading = false;
+        // return the final 10 or less objects to the completion block.
+        self->_completionHandler(nil, (NSArray<IMovie> *)finalMoviesList);
+    });
 }
 
 -(void)startOperationWithQueryString:(NSString*)queryString andYear:(NSString*)year andPage:(NSString*)page {
