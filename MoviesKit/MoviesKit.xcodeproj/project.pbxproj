@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		743E7D6F20EC7E6300172A64 /* MoviesKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 743E7D6520EC7E6300172A64 /* MoviesKit.framework */; };
-		743E7D7420EC7E6300172A64 /* MoviesKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7D7320EC7E6300172A64 /* MoviesKitTests.m */; };
 		743E7D7620EC7E6300172A64 /* MoviesKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 743E7D6820EC7E6300172A64 /* MoviesKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		743E7E0320EC8C7000172A64 /* MKMoviesDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E0120EC8C7000172A64 /* MKMoviesDownloader.m */; };
 		743E7E0420EC8C7000172A64 /* MKMoviesDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 743E7E0220EC8C7000172A64 /* MKMoviesDownloader.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -44,6 +43,13 @@
 			remoteGlobalIDString = 743E7E2320EE013900172A64;
 			remoteInfo = SortMovies;
 		};
+		743E7E7020F134D500172A64 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 743E7E3020EE020B00172A64 /* SortMovies.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 743E7E6620F1327300172A64;
+			remoteInfo = SortMoviesTest;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -51,7 +57,6 @@
 		743E7D6820EC7E6300172A64 /* MoviesKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoviesKit.h; sourceTree = "<group>"; };
 		743E7D6920EC7E6300172A64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		743E7D6E20EC7E6300172A64 /* MoviesKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoviesKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		743E7D7320EC7E6300172A64 /* MoviesKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoviesKitTests.m; sourceTree = "<group>"; };
 		743E7D7520EC7E6300172A64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		743E7D8420EC87D000172A64 /* DynamicUniversalFramework.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = DynamicUniversalFramework.sh; sourceTree = "<group>"; };
 		743E7E0120EC8C7000172A64 /* MKMoviesDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKMoviesDownloader.m; sourceTree = "<group>"; };
@@ -139,7 +144,6 @@
 			isa = PBXGroup;
 			children = (
 				743E7E4D20F0A95700172A64 /* Mocks */,
-				743E7D7320EC7E6300172A64 /* MoviesKitTests.m */,
 				743E7E4720F08CAF00172A64 /* MovieTests.m */,
 				743E7E4B20F0977800172A64 /* SearchMoviesOperationTest.m */,
 				743E7E5720F0CB1000172A64 /* MKMoviesDownloaderTest.m */,
@@ -160,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				743E7E3520EE020B00172A64 /* libSortMovies.a */,
+				743E7E7120F134D500172A64 /* SortMoviesTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -286,6 +291,13 @@
 			remoteRef = 743E7E3420EE020B00172A64 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		743E7E7120F134D500172A64 /* SortMoviesTest.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SortMoviesTest.xctest;
+			remoteRef = 743E7E7020F134D500172A64 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -343,7 +355,6 @@
 				743E7E4820F08CAF00172A64 /* MovieTests.m in Sources */,
 				743E7E5620F0B42200172A64 /* MockSearchMoviesOperationDelegate.m in Sources */,
 				743E7E5820F0CB1000172A64 /* MKMoviesDownloaderTest.m in Sources */,
-				743E7D7420EC7E6300172A64 /* MoviesKitTests.m in Sources */,
 				743E7E5020F0A97000172A64 /* MockURLSession.m in Sources */,
 				743E7E5F20F0E8E200172A64 /* MockMKMoviesDownloader.m in Sources */,
 			);

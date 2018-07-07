@@ -10,6 +10,8 @@
 		743E7E2B20EE014F00172A64 /* SortMovies.h in Headers */ = {isa = PBXBuildFile; fileRef = 743E7E2A20EE014F00172A64 /* SortMovies.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		743E7E2D20EE016300172A64 /* SortMovies.c in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E2C20EE016300172A64 /* SortMovies.c */; };
 		743E7E2F20EE018100172A64 /* MovieInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 743E7E2E20EE018100172A64 /* MovieInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		743E7E6920F1327300172A64 /* SortMoviesTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E6820F1327300172A64 /* SortMoviesTest.m */; };
+		743E7E6E20F134C600172A64 /* SortMovies.c in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E2C20EE016300172A64 /* SortMovies.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -17,10 +19,20 @@
 		743E7E2A20EE014F00172A64 /* SortMovies.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SortMovies.h; sourceTree = "<group>"; };
 		743E7E2C20EE016300172A64 /* SortMovies.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SortMovies.c; sourceTree = "<group>"; };
 		743E7E2E20EE018100172A64 /* MovieInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovieInfo.h; sourceTree = "<group>"; };
+		743E7E6620F1327300172A64 /* SortMoviesTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SortMoviesTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		743E7E6820F1327300172A64 /* SortMoviesTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SortMoviesTest.m; sourceTree = "<group>"; };
+		743E7E6A20F1327300172A64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		743E7E2020EE013900172A64 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		743E7E6320F1327300172A64 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -36,6 +48,7 @@
 				743E7E2C20EE016300172A64 /* SortMovies.c */,
 				743E7E2A20EE014F00172A64 /* SortMovies.h */,
 				743E7E2E20EE018100172A64 /* MovieInfo.h */,
+				743E7E6720F1327300172A64 /* SortMoviesTest */,
 				743E7E2420EE013900172A64 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -44,8 +57,18 @@
 			isa = PBXGroup;
 			children = (
 				743E7E2320EE013900172A64 /* libSortMovies.a */,
+				743E7E6620F1327300172A64 /* SortMoviesTest.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		743E7E6720F1327300172A64 /* SortMoviesTest */ = {
+			isa = PBXGroup;
+			children = (
+				743E7E6820F1327300172A64 /* SortMoviesTest.m */,
+				743E7E6A20F1327300172A64 /* Info.plist */,
+			);
+			path = SortMoviesTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -80,6 +103,23 @@
 			productReference = 743E7E2320EE013900172A64 /* libSortMovies.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		743E7E6520F1327300172A64 /* SortMoviesTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 743E7E6D20F1327300172A64 /* Build configuration list for PBXNativeTarget "SortMoviesTest" */;
+			buildPhases = (
+				743E7E6220F1327300172A64 /* Sources */,
+				743E7E6320F1327300172A64 /* Frameworks */,
+				743E7E6420F1327300172A64 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SortMoviesTest;
+			productName = SortMoviesTest;
+			productReference = 743E7E6620F1327300172A64 /* SortMoviesTest.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -90,6 +130,9 @@
 				ORGANIZATIONNAME = Assignment;
 				TargetAttributes = {
 					743E7E2220EE013900172A64 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+					743E7E6520F1327300172A64 = {
 						CreatedOnToolsVersion = 9.4.1;
 					};
 				};
@@ -107,9 +150,20 @@
 			projectRoot = "";
 			targets = (
 				743E7E2220EE013900172A64 /* SortMovies */,
+				743E7E6520F1327300172A64 /* SortMoviesTest */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		743E7E6420F1327300172A64 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		743E7E1F20EE013900172A64 /* Sources */ = {
@@ -117,6 +171,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				743E7E2D20EE016300172A64 /* SortMovies.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		743E7E6220F1327300172A64 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				743E7E6E20F134C600172A64 /* SortMovies.c in Sources */,
+				743E7E6920F1327300172A64 /* SortMoviesTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +319,47 @@
 			};
 			name = Release;
 		};
+		743E7E6B20F1327300172A64 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KY5H56A523;
+				INFOPLIST_FILE = SortMoviesTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.assignment.SortMoviesTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		743E7E6C20F1327300172A64 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KY5H56A523;
+				INFOPLIST_FILE = SortMoviesTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.assignment.SortMoviesTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -273,6 +377,15 @@
 			buildConfigurations = (
 				743E7E2820EE013900172A64 /* Debug */,
 				743E7E2920EE013900172A64 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		743E7E6D20F1327300172A64 /* Build configuration list for PBXNativeTarget "SortMoviesTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				743E7E6B20F1327300172A64 /* Debug */,
+				743E7E6C20F1327300172A64 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
