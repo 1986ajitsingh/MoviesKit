@@ -49,10 +49,8 @@
         movieInfo->releaseDate = nil;
     }
     
-    if (movieInfo != nil) {
-        free(movieInfo);
-        movieInfo = nil;
-    }
+    free(movieInfo);
+    movieInfo = nil;
 }
 
 -(long)getMovieId {

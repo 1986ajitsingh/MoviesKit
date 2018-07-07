@@ -24,6 +24,9 @@
 		743E7E5020F0A97000172A64 /* MockURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E4F20F0A97000172A64 /* MockURLSession.m */; };
 		743E7E5320F0AC3F00172A64 /* MockNSURLSessionDataTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E5220F0AC3F00172A64 /* MockNSURLSessionDataTask.m */; };
 		743E7E5620F0B42200172A64 /* MockSearchMoviesOperationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E5520F0B42200172A64 /* MockSearchMoviesOperationDelegate.m */; };
+		743E7E5820F0CB1000172A64 /* MKMoviesDownloaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E5720F0CB1000172A64 /* MKMoviesDownloaderTest.m */; };
+		743E7E5C20F0D01200172A64 /* MockOperationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E5B20F0D01200172A64 /* MockOperationQueue.m */; };
+		743E7E5F20F0E8E200172A64 /* MockMKMoviesDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E5E20F0E8E200172A64 /* MockMKMoviesDownloader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +70,12 @@
 		743E7E5220F0AC3F00172A64 /* MockNSURLSessionDataTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MockNSURLSessionDataTask.m; sourceTree = "<group>"; };
 		743E7E5420F0B42200172A64 /* MockSearchMoviesOperationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockSearchMoviesOperationDelegate.h; sourceTree = "<group>"; };
 		743E7E5520F0B42200172A64 /* MockSearchMoviesOperationDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MockSearchMoviesOperationDelegate.m; sourceTree = "<group>"; };
+		743E7E5720F0CB1000172A64 /* MKMoviesDownloaderTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MKMoviesDownloaderTest.m; sourceTree = "<group>"; };
+		743E7E5920F0CE5300172A64 /* TestCategories.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestCategories.h; sourceTree = "<group>"; };
+		743E7E5A20F0D01200172A64 /* MockOperationQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockOperationQueue.h; sourceTree = "<group>"; };
+		743E7E5B20F0D01200172A64 /* MockOperationQueue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MockOperationQueue.m; sourceTree = "<group>"; };
+		743E7E5D20F0E8E200172A64 /* MockMKMoviesDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockMKMoviesDownloader.h; sourceTree = "<group>"; };
+		743E7E5E20F0E8E200172A64 /* MockMKMoviesDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MockMKMoviesDownloader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +142,8 @@
 				743E7D7320EC7E6300172A64 /* MoviesKitTests.m */,
 				743E7E4720F08CAF00172A64 /* MovieTests.m */,
 				743E7E4B20F0977800172A64 /* SearchMoviesOperationTest.m */,
+				743E7E5720F0CB1000172A64 /* MKMoviesDownloaderTest.m */,
+				743E7E5920F0CE5300172A64 /* TestCategories.h */,
 				743E7D7520EC7E6300172A64 /* Info.plist */,
 			);
 			path = MoviesKitTests;
@@ -162,6 +173,10 @@
 				743E7E5220F0AC3F00172A64 /* MockNSURLSessionDataTask.m */,
 				743E7E5420F0B42200172A64 /* MockSearchMoviesOperationDelegate.h */,
 				743E7E5520F0B42200172A64 /* MockSearchMoviesOperationDelegate.m */,
+				743E7E5A20F0D01200172A64 /* MockOperationQueue.h */,
+				743E7E5B20F0D01200172A64 /* MockOperationQueue.m */,
+				743E7E5D20F0E8E200172A64 /* MockMKMoviesDownloader.h */,
+				743E7E5E20F0E8E200172A64 /* MockMKMoviesDownloader.m */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -321,13 +336,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				743E7E5C20F0D01200172A64 /* MockOperationQueue.m in Sources */,
 				743E7E4C20F0977800172A64 /* SearchMoviesOperationTest.m in Sources */,
 				743E7E4A20F0916100172A64 /* Movie.m in Sources */,
 				743E7E5320F0AC3F00172A64 /* MockNSURLSessionDataTask.m in Sources */,
 				743E7E4820F08CAF00172A64 /* MovieTests.m in Sources */,
 				743E7E5620F0B42200172A64 /* MockSearchMoviesOperationDelegate.m in Sources */,
+				743E7E5820F0CB1000172A64 /* MKMoviesDownloaderTest.m in Sources */,
 				743E7D7420EC7E6300172A64 /* MoviesKitTests.m in Sources */,
 				743E7E5020F0A97000172A64 /* MockURLSession.m in Sources */,
+				743E7E5F20F0E8E200172A64 /* MockMKMoviesDownloader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

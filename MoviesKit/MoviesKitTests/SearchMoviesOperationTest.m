@@ -10,13 +10,7 @@
 #import "SearchMoviesOperation.h"
 #import "MockURLSession.h"
 #import "MockSearchMoviesOperationDelegate.h"
-
-@interface SearchMoviesOperation (Testing)
-@property(nonatomic, strong) NSString *queryString;
-@property(nonatomic, strong) NSString *year;
-@property(nonatomic, strong) NSString *page;
-@property(nonatomic, strong) NSString *apiKey;
-@end
+#import "TestCategories.h"
 
 @interface SearchMoviesOperationTest : XCTestCase
 
