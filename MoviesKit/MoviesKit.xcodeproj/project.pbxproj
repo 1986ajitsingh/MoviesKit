@@ -20,6 +20,10 @@
 		743E7E3D20EE95A200172A64 /* SearchMoviesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E3B20EE95A200172A64 /* SearchMoviesOperation.m */; };
 		743E7E4820F08CAF00172A64 /* MovieTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E4720F08CAF00172A64 /* MovieTests.m */; };
 		743E7E4A20F0916100172A64 /* Movie.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E1420ECA58B00172A64 /* Movie.m */; };
+		743E7E4C20F0977800172A64 /* SearchMoviesOperationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E4B20F0977800172A64 /* SearchMoviesOperationTest.m */; };
+		743E7E5020F0A97000172A64 /* MockURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E4F20F0A97000172A64 /* MockURLSession.m */; };
+		743E7E5320F0AC3F00172A64 /* MockNSURLSessionDataTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E5220F0AC3F00172A64 /* MockNSURLSessionDataTask.m */; };
+		743E7E5620F0B42200172A64 /* MockSearchMoviesOperationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E5520F0B42200172A64 /* MockSearchMoviesOperationDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +60,13 @@
 		743E7E3A20EE95A200172A64 /* SearchMoviesOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchMoviesOperation.h; sourceTree = "<group>"; };
 		743E7E3B20EE95A200172A64 /* SearchMoviesOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchMoviesOperation.m; sourceTree = "<group>"; };
 		743E7E4720F08CAF00172A64 /* MovieTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MovieTests.m; sourceTree = "<group>"; };
+		743E7E4B20F0977800172A64 /* SearchMoviesOperationTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchMoviesOperationTest.m; sourceTree = "<group>"; };
+		743E7E4E20F0A97000172A64 /* MockURLSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockURLSession.h; sourceTree = "<group>"; };
+		743E7E4F20F0A97000172A64 /* MockURLSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MockURLSession.m; sourceTree = "<group>"; };
+		743E7E5120F0AC3F00172A64 /* MockNSURLSessionDataTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockNSURLSessionDataTask.h; sourceTree = "<group>"; };
+		743E7E5220F0AC3F00172A64 /* MockNSURLSessionDataTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MockNSURLSessionDataTask.m; sourceTree = "<group>"; };
+		743E7E5420F0B42200172A64 /* MockSearchMoviesOperationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockSearchMoviesOperationDelegate.h; sourceTree = "<group>"; };
+		743E7E5520F0B42200172A64 /* MockSearchMoviesOperationDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MockSearchMoviesOperationDelegate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,8 +129,10 @@
 		743E7D7220EC7E6300172A64 /* MoviesKitTests */ = {
 			isa = PBXGroup;
 			children = (
+				743E7E4D20F0A95700172A64 /* Mocks */,
 				743E7D7320EC7E6300172A64 /* MoviesKitTests.m */,
 				743E7E4720F08CAF00172A64 /* MovieTests.m */,
+				743E7E4B20F0977800172A64 /* SearchMoviesOperationTest.m */,
 				743E7D7520EC7E6300172A64 /* Info.plist */,
 			);
 			path = MoviesKitTests;
@@ -138,6 +151,19 @@
 				743E7E3520EE020B00172A64 /* libSortMovies.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		743E7E4D20F0A95700172A64 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				743E7E4E20F0A97000172A64 /* MockURLSession.h */,
+				743E7E4F20F0A97000172A64 /* MockURLSession.m */,
+				743E7E5120F0AC3F00172A64 /* MockNSURLSessionDataTask.h */,
+				743E7E5220F0AC3F00172A64 /* MockNSURLSessionDataTask.m */,
+				743E7E5420F0B42200172A64 /* MockSearchMoviesOperationDelegate.h */,
+				743E7E5520F0B42200172A64 /* MockSearchMoviesOperationDelegate.m */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,9 +321,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				743E7E4C20F0977800172A64 /* SearchMoviesOperationTest.m in Sources */,
 				743E7E4A20F0916100172A64 /* Movie.m in Sources */,
+				743E7E5320F0AC3F00172A64 /* MockNSURLSessionDataTask.m in Sources */,
 				743E7E4820F08CAF00172A64 /* MovieTests.m in Sources */,
+				743E7E5620F0B42200172A64 /* MockSearchMoviesOperationDelegate.m in Sources */,
 				743E7D7420EC7E6300172A64 /* MoviesKitTests.m in Sources */,
+				743E7E5020F0A97000172A64 /* MockURLSession.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,6 +22,9 @@
 @interface SearchMoviesOperation : NSOperation
 
 @property(nonatomic, weak) id<SearchMoviesOperationDelegate> delegate;
+// Dependency injection:: Injecting the session object to make this
+// class testable
+@property(nonatomic, strong) NSURLSession *urlSession;
 
 -(id)initWithQueryString:(NSString*)queryString andYear:(NSString*)year andPage:(NSString*)page andAPIKey:(NSString*)apiKey;
 

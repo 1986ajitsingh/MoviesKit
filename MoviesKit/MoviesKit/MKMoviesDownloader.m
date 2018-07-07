@@ -125,6 +125,7 @@
 
 -(void)startOperationWithQueryString:(NSString*)queryString andYear:(NSString*)year andPage:(NSString*)page {
     SearchMoviesOperation *operation = [[SearchMoviesOperation alloc] initWithQueryString:queryString andYear:year andPage:page andAPIKey:self.apiKey];
+    operation.urlSession = [NSURLSession sharedSession];
     operation.delegate = self;
     [self->operationQueue addOperation:operation];
 }

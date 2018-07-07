@@ -28,19 +28,31 @@
 }
 
 -(void)dealloc {
-    if (movieInfo != nil)
-        free(movieInfo);
-    else
+    if (movieInfo == nil) {
         return;
+    }
     
-    if (movieInfo->title != nil)
+    if (movieInfo->title != nil) {
         free(movieInfo->title);
-    if (movieInfo->posterPath != nil)
+        movieInfo->title = nil;
+    }
+    if (movieInfo->posterPath != nil) {
         free(movieInfo->posterPath);
-    if (movieInfo->overview != nil)
+        movieInfo->posterPath = nil;
+    }
+    if (movieInfo->overview != nil) {
         free(movieInfo->overview);
-    if (movieInfo->releaseDate != nil)
+        movieInfo->overview = nil;
+    }
+    if (movieInfo->releaseDate != nil) {
         free(movieInfo->releaseDate);
+        movieInfo->releaseDate = nil;
+    }
+    
+    if (movieInfo != nil) {
+        free(movieInfo);
+        movieInfo = nil;
+    }
 }
 
 -(long)getMovieId {

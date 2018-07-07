@@ -39,14 +39,18 @@
         return;
     }
     
-    NSString *finalSearchURL = [NSString stringWithFormat:MOVIES_SEARCH_URL, self.apiKey, self.queryString, self.page, self.year];
+    NSString *escapedAPIKey = [self.apiKey stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSString *escapedqueryString = [self.queryString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSString *escapedPage = [self.page stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSString *escapedYear = [self.year stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+
+    NSString *finalSearchURL = [NSString stringWithFormat:MOVIES_SEARCH_URL, escapedAPIKey, escapedqueryString, escapedPage, escapedYear];
     NSURL *url = [NSURL URLWithString:finalSearchURL];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL: url];
-    NSURLSession *session = [NSURLSession sharedSession];
     
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    NSURLSessionDataTask *task = [self.urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error != nil) {
             if ([self.delegate respondsToSelector:@selector(onFailureDueToNetworkError)] && !self.isCancelled) {
                 [self.delegate onFailureDueToNetworkError];

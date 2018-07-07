@@ -19,8 +19,8 @@
 
 @interface MovieTests : XCTestCase
 
-@property(nonatomic) id<IMovie> movieWithMovieInfo;
-@property(nonatomic) id<IMovie> movieWithoutMovieInfo;
+@property(nonatomic, strong) id<IMovie> movieWithMovieInfo;
+@property(nonatomic, strong) id<IMovie> movieWithoutMovieInfo;
 
 @end
 
@@ -210,4 +210,40 @@
     // Assert
     XCTAssertNil(releaseDate);
 }
+
+- (void)testMovieDealloc {
+    // Arrange
+    MovieInfo *movieInfo = (MovieInfo *)malloc(sizeof(MovieInfo));
+    movieInfo->movieId = MOVIE_TEST_ID;
+    movieInfo->voteCount = MOVIE_TEST_VOTE_COUNT;
+    movieInfo->voteAverage = MOVIE_TEST_VOTE_AVERAGE;
+    movieInfo->title = [self deepCopyNSStringToCString:MOVIE_TEST_TITLE];
+    movieInfo->posterPath = [self deepCopyNSStringToCString:MOVIE_TEST_POSTER_PATH];
+    movieInfo->overview = [self deepCopyNSStringToCString:MOVIE_TEST_OVERVIEW];
+    movieInfo->releaseDate = [self deepCopyNSStringToCString:MOVIE_TEST_RELEASE_DATE];
+    
+    // Act
+    Movie* __weak movie = [[Movie alloc] initWithMovieInfo:movieInfo];
+    
+    // Assert
+    XCTAssertNil([movie getTitle]);
+    XCTAssertNil([movie getPosterPath]);
+    XCTAssertNil([movie getOverview]);
+    XCTAssertNil([movie getReleaseDate]);
+}
+
+- (void)testMovieDeallocWithNoMovieInfo {
+    // Arrange
+    
+    // Act
+    Movie* __weak movie = [[Movie alloc] init];
+    
+    // Assert
+    XCTAssertNil([movie getTitle]);
+    XCTAssertNil([movie getPosterPath]);
+    XCTAssertNil([movie getOverview]);
+    XCTAssertNil([movie getReleaseDate]);
+}
+
+
 @end
