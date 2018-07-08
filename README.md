@@ -38,7 +38,7 @@ cd MoviesApp
 
 # Running the tests
 Both libraries in the source code, that is, MoviesKit - iOS Dynamic library and SortMovies - C static library, are packed with Unit Tests. Code coverage is 97.5%. 
-### For running unit tests - 
+### For running unit tests 
 - Select respective library project as target in XCode 
 - Select Product and then Test option 
 ### To generate code coverage report 
@@ -71,8 +71,8 @@ Following are the high-level steps required to deploy the app on Apple App Store
 ### Post by the author: 
 -  [*Blog*](https://www.globallogic.com/blogs/author/ajit-singh/)
 - *Whitepapers*
-- [Mobile Application Architecture: React Native with Redux](https://www.globallogic.com/gl_news/mobile-application-architecture-react-native-with-redux/)
-- [A Review of React Native for Cross-platform Mobile Application Development](https://www.globallogic.com/gl_news/a-review-of-react-native-for-cross-platform/)
-- [Enabling Enterprise Collaboration Platforms with Mitel Embedded Communications (MiEC) SDK V6.0](https://www.globallogic.com/gl_news/enabling-enterprise-collaboration-platforms-with-mitel-embedded-communications-miec-sdk-v6-0/)
-- [Cashless India: Leveraging Possibilities and Facing Security Challenges In the Mobile Space](https://www.globallogic.com/gl_news/cashless-india-leveraging-possibilities-and-facing-security-challenges-in-the-mobile-space/)
-- [Smart Homes: A Deep Dive](https://www.globallogic.com/gl_news/smart-homes-a-deep-dive/)
+-- [Mobile Application Architecture: React Native with Redux](https://www.globallogic.com/gl_news/mobile-application-architecture-react-native-with-redux/)
+-- [A Review of React Native for Cross-platform Mobile Application Development](https://www.globallogic.com/gl_news/a-review-of-react-native-for-cross-platform/)
+-- [Enabling Enterprise Collaboration Platforms with Mitel Embedded Communications (MiEC) SDK V6.0](https://www.globallogic.com/gl_news/enabling-enterprise-collaboration-platforms-with-mitel-embedded-communications-miec-sdk-v6-0/)
+-- [Cashless India: Leveraging Possibilities and Facing Security Challenges In the Mobile Space](https://www.globallogic.com/gl_news/cashless-india-leveraging-possibilities-and-facing-security-challenges-in-the-mobile-space/)
+-- [Smart Homes: A Deep Dive](https://www.globallogic.com/gl_news/smart-homes-a-deep-dive/)
