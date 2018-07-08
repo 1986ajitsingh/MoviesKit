@@ -65,30 +65,35 @@ class ViewController: UIViewController, UITableViewDelegate {
     }
     
     @IBAction func showSettingsScreen(_ sender: UIBarButtonItem) {
-        var message = "Please enter the 32 char API Key."
-        if let apiKey = self.getAPIKey() {
-            message = """
-            Existing API Key is \(apiKey)
-            
-            Please enter a new API key, if you wish to change.
-            """
-        }
-            
-        let alert = UIAlertController(title: "Configuration View", message: message, preferredStyle: UIAlertControllerStyle.alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
-        let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.default) { (alertAction) in
-            let textField = alert.textFields?.first
-            if (textField?.text?.count)! > 0 {
-                self.saveAPIKey((textField?.text)!)
-                self.filterContentForSearchText(kDefaultMoviesFilterString)
+        // check if its a jailbroken device
+        if self.isRunningOnJailBrokenDevice() {
+            self.showError(title: "Error", message: "Operation not supported on a Jailbroken iOS device.")
+        } else {
+            var message = "Please enter the 32 char API Key."
+            if let apiKey = self.getAPIKey() {
+                message = """
+                Existing API Key is \(apiKey)
+                
+                Please enter a new API key, if you wish to change.
+                """
             }
+            
+            let alert = UIAlertController(title: "Configuration View", message: message, preferredStyle: UIAlertControllerStyle.alert)
+            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
+            let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.default) { (alertAction) in
+                let textField = alert.textFields?.first
+                if (textField?.text?.count)! > 0 {
+                    self.saveAPIKey((textField?.text)!)
+                    self.filterContentForSearchText(kDefaultMoviesFilterString)
+                }
+            }
+            alert.addAction(saveAction)
+            alert.addAction(cancelAction)
+            alert.addTextField { (textField) in
+                textField.placeholder = "Enter API Key here"
+            }
+            self.present(alert, animated: true)
         }
-        alert.addAction(saveAction)
-        alert.addAction(cancelAction)
-        alert.addTextField { (textField) in
-            textField.placeholder = "Enter API Key here"
-        }
-        self.present(alert, animated: true)
     }
     
     // MARK: - Private instance methods
@@ -100,9 +105,12 @@ class ViewController: UIViewController, UITableViewDelegate {
     }
     
     func getAPIKey() -> String! {
-        if let encryptedApiKey = UserDefaults.standard.object(forKey: kApiKeyUserDefaultsKey) {
-            let apiKey = Crypto.decrypt(input: encryptedApiKey as! String)
-            return apiKey
+        // check if its a jailbroken device
+        if !self.isRunningOnJailBrokenDevice() {
+            if let encryptedApiKey = UserDefaults.standard.object(forKey: kApiKeyUserDefaultsKey) {
+                let apiKey = Crypto.decrypt(input: encryptedApiKey as! String)
+                return apiKey
+            }
         }
         return nil
     }
@@ -123,6 +131,10 @@ class ViewController: UIViewController, UITableViewDelegate {
     
     func handleError(error:NSError) {
         let message: String = self.mapErrorCodeToErrorMessage(errorCode: DownloadErrorCodes(rawValue: downloadErrorCodes.RawValue(error.code)))
+        self.showError(title: "Error", message: message)
+    }
+    
+    func showError(title: String, message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil))
         self.present(alert, animated: true)
@@ -195,6 +207,37 @@ class ViewController: UIViewController, UITableViewDelegate {
             } else {
                 print("Failed to download the movie poster")
             }
+        }
+    }
+    
+    func isRunningOnJailBrokenDevice() -> Bool {
+        if TARGET_IPHONE_SIMULATOR != 1
+        {
+            // Check 1 : existence of files that are common for jailbroken devices
+            if FileManager.default.fileExists(atPath: "/Applications/Cydia.app")
+                || FileManager.default.fileExists(atPath: "/Library/MobileSubstrate/MobileSubstrate.dylib")
+                || FileManager.default.fileExists(atPath: "/bin/bash")
+                || FileManager.default.fileExists(atPath: "/usr/sbin/sshd")
+                || FileManager.default.fileExists(atPath: "/etc/apt")
+                || FileManager.default.fileExists(atPath: "/private/var/lib/apt/")
+                || UIApplication.shared.canOpenURL(URL(string:"cydia://package/com.example.package")!)
+                    {
+                    return true
+            }
+            // Check 2 : Reading and writing in system directories (sandbox violation)
+            let stringToWrite = "Jailbreak Test"
+            do
+            {
+                try stringToWrite.write(toFile:"/private/JailbreakTest.txt", atomically:true, encoding:String.Encoding.utf8)
+                //Device is jailbroken
+                return true
+            }catch
+            {
+                return false
+            }
+        }else
+        {
+            return false
         }
     }
 }
