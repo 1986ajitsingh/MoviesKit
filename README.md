@@ -36,7 +36,7 @@ cd MoviesApp
 # Open project in XCode
 ```
 
-# Running the tests
+## Running the tests
 Both libraries in the source code, that is, MoviesKit - iOS Dynamic library and SortMovies - C static library, are packed with Unit Tests. Code coverage is 97.5%. 
 ### For running unit tests 
 - Select respective library project as target in XCode 
@@ -47,7 +47,17 @@ Both libraries in the source code, that is, MoviesKit - iOS Dynamic library and 
 - Select Test, then Options tab and enable Code Coverage 
 - Run unit test as mentioned above 
 
-
+## Creating Universal/ Fat libraries
+### MoviesKit - Dynamic Library 
+- Open Xcode project file MoviesKit.xcodeproj
+- Select MoviesKit target and device as "Generic iOS Device"
+- Select Archive from Product Menu 
+- Script will run and will create Universal Dynamic framework in Release folder in project folder 
+### SortMovies - Static Library
+- Open Xcode project file SortMovies.xcodeproj
+- Select SortMoviesUniversalLib target 
+- Run Build in Xcode
+- Script will run and will create universal/ fat lib libSortMovies.a in the project folder 
 
 ## Running on the Device
 - Plug in your device via USB
