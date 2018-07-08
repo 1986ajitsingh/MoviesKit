@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A3B1FFF20F229AE004AB127 /* libSortMovies.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 743E7E3520EE020B00172A64 /* libSortMovies.a */; };
 		743E7D6F20EC7E6300172A64 /* MoviesKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 743E7D6520EC7E6300172A64 /* MoviesKit.framework */; };
 		743E7D7620EC7E6300172A64 /* MoviesKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 743E7D6820EC7E6300172A64 /* MoviesKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		743E7E0320EC8C7000172A64 /* MKMoviesDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E0120EC8C7000172A64 /* MKMoviesDownloader.m */; };
@@ -14,7 +15,6 @@
 		743E7E1520ECA58B00172A64 /* Movie.h in Headers */ = {isa = PBXBuildFile; fileRef = 743E7E1320ECA58B00172A64 /* Movie.h */; };
 		743E7E1620ECA58B00172A64 /* Movie.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E1420ECA58B00172A64 /* Movie.m */; };
 		743E7E1820ECA76400172A64 /* IMovie.h in Headers */ = {isa = PBXBuildFile; fileRef = 743E7E1720ECA76400172A64 /* IMovie.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		743E7E3720EE023000172A64 /* libSortMovies.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 743E7E3520EE020B00172A64 /* libSortMovies.a */; };
 		743E7E3C20EE95A200172A64 /* SearchMoviesOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 743E7E3A20EE95A200172A64 /* SearchMoviesOperation.h */; };
 		743E7E3D20EE95A200172A64 /* SearchMoviesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E3B20EE95A200172A64 /* SearchMoviesOperation.m */; };
 		743E7E4820F08CAF00172A64 /* MovieTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E4720F08CAF00172A64 /* MovieTests.m */; };
@@ -88,7 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				743E7E3720EE023000172A64 /* libSortMovies.a in Frameworks */,
+				6A3B1FFF20F229AE004AB127 /* libSortMovies.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

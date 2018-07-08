@@ -6,6 +6,20 @@
 	objectVersion = 50;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		6A3B1FF720F22124004AB127 /* UniversalLib */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 6A3B1FFA20F22124004AB127 /* Build configuration list for PBXAggregateTarget "UniversalLib" */;
+			buildPhases = (
+				6A3B1FFB20F2212C004AB127 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = UniversalLib;
+			productName = UniversalLib;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		743E7E2B20EE014F00172A64 /* SortMovies.h in Headers */ = {isa = PBXBuildFile; fileRef = 743E7E2A20EE014F00172A64 /* SortMovies.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		743E7E2D20EE016300172A64 /* SortMovies.c in Sources */ = {isa = PBXBuildFile; fileRef = 743E7E2C20EE016300172A64 /* SortMovies.c */; };
@@ -129,6 +143,9 @@
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Assignment;
 				TargetAttributes = {
+					6A3B1FF720F22124004AB127 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
 					743E7E2220EE013900172A64 = {
 						CreatedOnToolsVersion = 9.4.1;
 					};
@@ -151,6 +168,7 @@
 			targets = (
 				743E7E2220EE013900172A64 /* SortMovies */,
 				743E7E6520F1327300172A64 /* SortMoviesTest */,
+				6A3B1FF720F22124004AB127 /* UniversalLib */,
 			);
 		};
 /* End PBXProject section */
@@ -164,6 +182,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6A3B1FFB20F2212C004AB127 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# define output folder environment variable\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal\n\n# Step 1. Build Device and Simulator versions\nxcodebuild -target SortMovies ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\nxcodebuild -target SortMovies -configuration ${CONFIGURATION} -sdk iphonesimulator -arch i386 BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# Step 2. Create universal binary file using lipo\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		743E7E1F20EE013900172A64 /* Sources */ = {
@@ -186,6 +220,28 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		6A3B1FF820F22124004AB127 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos11.4;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+			};
+			name = Debug;
+		};
+		6A3B1FF920F22124004AB127 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos11.4;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+			};
+			name = Release;
+		};
 		743E7E2520EE013900172A64 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -301,7 +357,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KY5H56A523;
 				EXECUTABLE_PREFIX = lib;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos11.4;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
@@ -313,7 +371,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KY5H56A523;
 				EXECUTABLE_PREFIX = lib;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos11.4;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
@@ -363,6 +423,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6A3B1FFA20F22124004AB127 /* Build configuration list for PBXAggregateTarget "UniversalLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A3B1FF820F22124004AB127 /* Debug */,
+				6A3B1FF920F22124004AB127 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		743E7E1E20EE013900172A64 /* Build configuration list for PBXProject "SortMovies" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
