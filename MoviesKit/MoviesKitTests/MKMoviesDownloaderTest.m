@@ -15,6 +15,10 @@
 
 @interface MKMoviesDownloader (Testing)
 @property (nonatomic, strong) NSString* apiKey;
+@property (nonatomic, strong) NSOperationQueue *operationQueue;
+@property (nonatomic, strong) NSMutableArray *downloadRawResults;
+@property (nonatomic, assign) Boolean isDownloading;
+@property (nonatomic, strong) void (^completionHandler)(NSError *error, NSArray<IMovie> *movies);
 
 -(void)downloadLatestMoviesForSearchFilter:(NSString*)searchFilter withCompletionHandler:(void(^)(NSError *error, NSArray<IMovie> *movies))completionHandler;
 -(void)proceedToSortingResults:(NSArray*) results;
@@ -89,8 +93,7 @@
     [moviesDownloader downloadLatestMoviesForSearchFilter:nil withCompletionHandler:expectedCompletionHandler];
     
     // Assert
-    void (^completionHandler)(NSError *error, NSArray<IMovie> *movies) = [moviesDownloader valueForKey:@"_completionHandler"];
-    XCTAssertEqual(completionHandler, expectedCompletionHandler);
+    XCTAssertEqual(moviesDownloader.completionHandler, expectedCompletionHandler);
     XCTAssertTrue(moviesDownloader.sendErrorResponseOnMainThreadGotCalled);
     XCTAssertTrue(moviesDownloader.errorCode == API_KET_IS_NOT_SET_ERROR);
     XCTAssertTrue([moviesDownloader.errorDomain isEqualToString:INVALID_STATE_ERROR_DOMAIN]);
@@ -106,8 +109,7 @@
     [moviesDownloader downloadLatestMoviesForSearchFilter:@"1" withCompletionHandler:expectedCompletionHandler];
     
     // Assert
-    void (^completionHandler)(NSError *error, NSArray<IMovie> *movies) = [moviesDownloader valueForKey:@"_completionHandler"];
-    XCTAssertEqual(completionHandler, expectedCompletionHandler);
+    XCTAssertEqual(moviesDownloader.completionHandler, expectedCompletionHandler);
     XCTAssertTrue(moviesDownloader.sendErrorResponseOnMainThreadGotCalled);
     XCTAssertTrue(moviesDownloader.errorCode == MINIMUM_TWO_CHARACTER_SEARCH_FILTER_REQUIRED_ERROR);
     XCTAssertTrue([moviesDownloader.errorDomain isEqualToString:INVALID_INPUT_ERROR_DOMAIN]);
@@ -118,14 +120,13 @@
     // Arrange
     MockMKMoviesDownloader *moviesDownloader = [[MockMKMoviesDownloader alloc] initWithAPIKey:@"some api key"];
     void (^expectedCompletionHandler)(NSError *error, NSArray<IMovie> *movies) = ^void (NSError *error, NSArray<IMovie> *movies) {};
-    [moviesDownloader setValue:[NSNumber numberWithBool:YES] forKey:@"_isDownloading"];
+    moviesDownloader.isDownloading = YES;
     
     // Act
     [moviesDownloader downloadLatestMoviesForSearchFilter:@"Batman" withCompletionHandler:expectedCompletionHandler];
     
     // Assert
-    void (^completionHandler)(NSError *error, NSArray<IMovie> *movies) = [moviesDownloader valueForKey:@"_completionHandler"];
-    XCTAssertEqual(completionHandler, expectedCompletionHandler);
+    XCTAssertEqual(moviesDownloader.completionHandler, expectedCompletionHandler);
     XCTAssertTrue(moviesDownloader.sendErrorResponseOnMainThreadGotCalled);
     XCTAssertTrue(moviesDownloader.errorCode == ANOTHER_DOWNLOAD_IS_IN_PROGRESS_ERROR);
     XCTAssertTrue([moviesDownloader.errorDomain isEqualToString:INVALID_STATE_ERROR_DOMAIN]);
@@ -136,10 +137,10 @@
     // Arrange
     MockMKMoviesDownloader *moviesDownloader = [[MockMKMoviesDownloader alloc] initWithAPIKey:@"some api key"];
     void (^expectedCompletionHandler)(NSError *error, NSArray<IMovie> *movies) = ^void (NSError *error, NSArray<IMovie> *movies) {};
-    [moviesDownloader setValue:nil forKey:@"_downloadRawResults"];
+    moviesDownloader.downloadRawResults = nil;
     NSString *testQueryString = @"Batman";
     MockOperationQueue *operationQueue = [[MockOperationQueue alloc] init];
-    [moviesDownloader setValue:operationQueue forKey:@"_operationQueue"];
+    moviesDownloader.operationQueue = operationQueue;
 
     // Act
     [moviesDownloader downloadLatestMoviesForSearchFilter:testQueryString withCompletionHandler:expectedCompletionHandler];
@@ -147,20 +148,13 @@
     // Assert
     // Run the main loop briefly to let it call the async block
     [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
-    void (^completionHandler)(NSError *error, NSArray<IMovie> *movies) = [moviesDownloader valueForKey:@"_completionHandler"];
-    XCTAssertEqual(completionHandler, expectedCompletionHandler);
-    
-    NSNumber* isDownloadNumberValue = [moviesDownloader valueForKey:@"_isDownloading"];
-    XCTAssertTrue(isDownloadNumberValue.boolValue);
-    
-    NSMutableArray* downloadRawResults = [moviesDownloader valueForKey:@"_downloadRawResults"];
-    XCTAssertNotNil(downloadRawResults);
-    
+    XCTAssertEqual(moviesDownloader.completionHandler, expectedCompletionHandler);
+    XCTAssertTrue(moviesDownloader.isDownloading);
+    XCTAssertNotNil(moviesDownloader.downloadRawResults);
     XCTAssertTrue(moviesDownloader.startOperationWithQueryStringCalledCount == 2);
     XCTAssertTrue([moviesDownloader.queryStringForStartOperation isEqualToString:testQueryString]);
     XCTAssertTrue([moviesDownloader.yearForStartOperation isEqualToString:YEAR_2017]);
     XCTAssertTrue([moviesDownloader.pageForStartOperation isEqualToString:@"1"]);
-
     XCTAssertTrue(operationQueue.waitUntilAllOperationsAreFinishedGotCalled);
     XCTAssertNotNil(moviesDownloader.proceedToSortingResultsInput);
 }
@@ -186,7 +180,7 @@
     moviesDownloader.proceedToSortingResultsShouldCallSuper = YES;
     NSArray *resultInput = @[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11", @"12", @"13", @"14", @"15"];
     NSMutableArray *testDownloadRawResults = [[NSMutableArray alloc] initWithObjects:@"1", @"2", nil];
-    [moviesDownloader setValue:testDownloadRawResults forKey:@"_downloadRawResults"];
+    moviesDownloader.downloadRawResults = testDownloadRawResults;
     
     // Act
     [moviesDownloader proceedToSortingResults:resultInput];
@@ -204,10 +198,9 @@
     MKMoviesDownloader *moviesDownloader = [[MKMoviesDownloader alloc] init];
     NSArray *someTestArray = [[NSArray alloc] init];
     __block NSArray *resultArray = nil;
-    void (^_completionHandler)(NSError *error, NSArray<IMovie> *movies) = ^void (NSError *error, NSArray<IMovie> *movies) {
+    moviesDownloader.completionHandler = ^void (NSError *error, NSArray<IMovie> *movies) {
         resultArray = movies;
     };
-    [moviesDownloader setValue:_completionHandler forKey:@"_completionHandler"];
     
     // Act
     [moviesDownloader finishWithFinalMoviesList:someTestArray];
@@ -215,8 +208,7 @@
     // Assert
     // Run the main loop briefly to let it call the async block
     [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
-    NSNumber* isDownloadNumberValue = [moviesDownloader valueForKey:@"_isDownloading"];
-    XCTAssertFalse(isDownloadNumberValue.boolValue);
+    XCTAssertFalse(moviesDownloader.isDownloading);
     XCTAssertEqual(resultArray, someTestArray);
 }
 
@@ -228,7 +220,7 @@
     NSString *testAPIKey = @"Some test key";
     MKMoviesDownloader *moviesDownloader = [[MKMoviesDownloader alloc] initWithAPIKey:testAPIKey];
     MockOperationQueue *operationQueue = [[MockOperationQueue alloc] init];
-    [moviesDownloader setValue:operationQueue forKey:@"_operationQueue"];
+    moviesDownloader.operationQueue = operationQueue;
     
     // Act
     [moviesDownloader startOperationWithQueryString:testQueryString andYear:testYear andPage:testPage];
@@ -249,12 +241,11 @@
     NSString *testErrorDomain = @"Some error domain";
     MKMoviesDownloader *moviesDownloader = [[MKMoviesDownloader alloc] init];
     __block NSError* receivedError = nil;
-    void (^_completionHandler)(NSError *error, NSArray<IMovie> *movies) = ^void (NSError *error, NSArray<IMovie> *movies) {
+    moviesDownloader.completionHandler = ^void (NSError *error, NSArray<IMovie> *movies) {
         receivedError = error;
     };
-    [moviesDownloader setValue:_completionHandler forKey:@"_completionHandler"];
     MockOperationQueue *operationQueue = [[MockOperationQueue alloc] init];
-    [moviesDownloader setValue:operationQueue forKey:@"_operationQueue"];
+    moviesDownloader.operationQueue = operationQueue;
     
     // Act
     [moviesDownloader sendErrorResponseOnMainThread:testErrorDomain andErrorCode:NETWORK_ERROR andUserInfo:nil];
@@ -262,8 +253,7 @@
     // Assert
     // Run the main loop briefly to let it call the async block
     [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
-    NSNumber* isDownloadNumberValue = [moviesDownloader valueForKey:@"_isDownloading"];
-    XCTAssertFalse(isDownloadNumberValue.boolValue);
+    XCTAssertFalse(moviesDownloader.isDownloading);
     XCTAssertTrue(receivedError.code == NETWORK_ERROR);
     XCTAssertTrue([receivedError.domain isEqualToString:testErrorDomain]);
     XCTAssertTrue(operationQueue.cancelAllOperationsGotCalled);
@@ -392,7 +382,7 @@
     }";
     NSData *responseData = [response dataUsingEncoding:NSUTF8StringEncoding];
     NSMutableArray *testDownloadRawResults = [[NSMutableArray alloc] init];
-    [moviesDownloader setValue:testDownloadRawResults forKey:@"_downloadRawResults"];
+    moviesDownloader.downloadRawResults = testDownloadRawResults;
     
     // Act
     [moviesDownloader onSuccessWithData:responseData andQueryString:testQueryString andYear:testYear];

@@ -14,12 +14,16 @@
 
 @interface MKMoviesDownloader() <SearchMoviesOperationDelegate> {
 @private
-    void (^_completionHandler)(NSError *error, NSArray<IMovie> *movies);
-    Boolean _isDownloading;
-    NSMutableArray *_downloadRawResults;
-    NSOperationQueue *_operationQueue;
+//    void (^_completionHandler)(NSError *error, NSArray<IMovie> *movies);
+//    Boolean _isDownloading;
+//    NSMutableArray *_downloadRawResults;
+//    NSOperationQueue *_operationQueue;
 }
-@property (nonatomic, strong) NSString* apiKey;
+    @property (nonatomic, strong) NSString* apiKey;
+    @property (nonatomic, strong) NSOperationQueue *operationQueue;
+    @property (nonatomic, strong) NSMutableArray *downloadRawResults;
+    @property (nonatomic, assign) Boolean isDownloading;
+    @property (nonatomic, strong) void (^completionHandler)(NSError *error, NSArray<IMovie> *movies);
 @end
 
 @implementation MKMoviesDownloader
@@ -32,8 +36,8 @@
     self = [super init];
     if (self) {
         self.apiKey = apiKey;
-        _operationQueue = [[NSOperationQueue alloc] init];
-        _operationQueue.maxConcurrentOperationCount = 5;
+        self.operationQueue = [[NSOperationQueue alloc] init];
+        self.operationQueue.maxConcurrentOperationCount = 5;
     }
     return self;
 }
@@ -42,40 +46,47 @@
     self.apiKey = apiKey;
 }
 
--(void)downloadLatestMoviesForSearchFilter:(NSString*)searchFilter withCompletionHandler:(void(^)(NSError *error, NSArray<IMovie> *movies))completionHandler {
+-(void)downloadLatestMoviesForSearchFilter:(NSString*)searchFilter
+                     withCompletionHandler:(void(^)(NSError *error, NSArray<IMovie> *movies))completionHandler {
     
-    self->_completionHandler = [completionHandler copy];
+    self.completionHandler = completionHandler;
     
     if (self.apiKey == nil) {
-        [self sendErrorResponseOnMainThread:INVALID_STATE_ERROR_DOMAIN andErrorCode:API_KET_IS_NOT_SET_ERROR andUserInfo:nil];
+        [self sendErrorResponseOnMainThread:INVALID_STATE_ERROR_DOMAIN
+                               andErrorCode:API_KET_IS_NOT_SET_ERROR
+                                andUserInfo:nil];
         return;
     }
     
     // Hence minimum 2 characters search filter is required
     if (searchFilter.length < 2) {
-        [self sendErrorResponseOnMainThread:INVALID_INPUT_ERROR_DOMAIN andErrorCode:MINIMUM_TWO_CHARACTER_SEARCH_FILTER_REQUIRED_ERROR andUserInfo:nil];
+        [self sendErrorResponseOnMainThread:INVALID_INPUT_ERROR_DOMAIN
+                               andErrorCode:MINIMUM_TWO_CHARACTER_SEARCH_FILTER_REQUIRED_ERROR
+                                andUserInfo:nil];
         return;
     }
     
-    if (self->_isDownloading) {
-        [self sendErrorResponseOnMainThread:INVALID_STATE_ERROR_DOMAIN andErrorCode:ANOTHER_DOWNLOAD_IS_IN_PROGRESS_ERROR andUserInfo:nil];
+    if (self.isDownloading) {
+        [self sendErrorResponseOnMainThread:INVALID_STATE_ERROR_DOMAIN
+                               andErrorCode:ANOTHER_DOWNLOAD_IS_IN_PROGRESS_ERROR
+                                andUserInfo:nil];
         return;
     }
     
-    self->_isDownloading = true;
-    self->_downloadRawResults = [[NSMutableArray alloc] init];
+    self.isDownloading = true;
+    self.downloadRawResults = [[NSMutableArray alloc] init];
     
     [self startOperationWithQueryString:searchFilter andYear:YEAR_2018 andPage:@"1"];
     [self startOperationWithQueryString:searchFilter andYear:YEAR_2017 andPage:@"1"];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self->_operationQueue waitUntilAllOperationsAreFinished];
+        [self.operationQueue waitUntilAllOperationsAreFinished];
         // Control will come here once all the download operations are complete
         // hence, proceed to sorting the results from here.
         // check if state is still isDownloading,
         // if not then it means, there was an error hence do nothing
-        if (self->_isDownloading) {
-            [self proceedToSortingResults:self->_downloadRawResults];
+        if (self.isDownloading) {
+            [self proceedToSortingResults:self.downloadRawResults];
         }
     });
 }
@@ -83,13 +94,15 @@
 #pragma mark - Private helper functions
 -(void)proceedToSortingResults:(NSArray*) results {
     if (results.count == 0) {
-        [self sendErrorResponseOnMainThread:DOWNLOAD_FAILED_ERROR_DOMAIN andErrorCode:NO_MOVIES_FOUND_MATCHING_SEARCH_FILTER andUserInfo:nil];
+        [self sendErrorResponseOnMainThread:DOWNLOAD_FAILED_ERROR_DOMAIN
+                               andErrorCode:NO_MOVIES_FOUND_MATCHING_SEARCH_FILTER
+                                andUserInfo:nil];
         
     } else {
         MovieInfo **movies = (MovieInfo **)malloc(results.count * sizeof(MovieInfo *));
         
         for (int index = 0 ; index < results.count ; index++) {
-            movies[index] = [self getMovieInfoFromMovieDict:[results objectAtIndex:index]];
+            movies[index] = [self getMovieInfoFromMovieDict:results[index]];
         }
         
         // Use C library function to sort movies
@@ -97,51 +110,58 @@
         
         // From sorted movies, create Movie class objects for 10 or less.
         // Then release the rest of the MovieInfo objects (if any)
-        NSMutableArray *topRated10OrLessMovies = [[NSMutableArray alloc] init];
+        NSMutableArray *topRatedMovies = [[NSMutableArray alloc] init];
         for (int index = 0 ; index < results.count ; index++) {
             if (index < 10) {
                 Movie *movie = [[Movie alloc] initWithMovieInfo:movies[index]];
-                [topRated10OrLessMovies addObject:movie];
+                [topRatedMovies addObject:movie];
             } else {
                 [self freeMovieInfo:movies[index]];
             }
         }
         
-        // Clear the _downloadRawResults and movies array since it's no more required
-        [self->_downloadRawResults removeAllObjects];
+        // Clear the downloadRawResults and movies array since it's no more required
+        [self.downloadRawResults removeAllObjects];
         free(movies);
         
-        [self finishWithFinalMoviesList:topRated10OrLessMovies];
+        [self finishWithFinalMoviesList:topRatedMovies];
     }
 }
 
 -(void)finishWithFinalMoviesList:(NSArray*)finalMoviesList {
     dispatch_async(dispatch_get_main_queue(), ^(void) {
-        self->_isDownloading = false;
+        self.isDownloading = false;
         // return the final 10 or less objects to the completion block.
-        self->_completionHandler(nil, (NSArray<IMovie> *)finalMoviesList);
+        self.completionHandler(nil, (NSArray<IMovie> *)finalMoviesList);
     });
 }
 
--(void)startOperationWithQueryString:(NSString*)queryString andYear:(NSString*)year andPage:(NSString*)page {
-    SearchMoviesOperation *operation = [[SearchMoviesOperation alloc] initWithQueryString:queryString andYear:year andPage:page andAPIKey:self.apiKey];
+-(void)startOperationWithQueryString:(NSString*)queryString
+                             andYear:(NSString*)year
+                             andPage:(NSString*)page {
+    SearchMoviesOperation *operation = [[SearchMoviesOperation alloc]
+                                        initWithQueryString:queryString
+                                        andYear:year andPage:page
+                                        andAPIKey:self.apiKey];
     operation.urlSession = [NSURLSession sharedSession];
     operation.delegate = self;
-    [self->_operationQueue addOperation:operation];
+    [self.operationQueue addOperation:operation];
 }
 
--(void)sendErrorResponseOnMainThread:(NSString*)errorDomain andErrorCode:(DownloadErrorCodes)errorCode andUserInfo:(NSDictionary*)userInfo {
+-(void)sendErrorResponseOnMainThread:(NSString*)errorDomain
+                        andErrorCode:(DownloadErrorCodes)errorCode
+                         andUserInfo:(NSDictionary*)userInfo {
     
-    self->_isDownloading = false;
-    [self->_operationQueue cancelAllOperations];
+    self.isDownloading = false;
+    [self.operationQueue cancelAllOperations];
     
     NSError *error = [[NSError alloc] initWithDomain:errorDomain code:errorCode userInfo:userInfo];
     if ([NSThread isMainThread]) {
-        self->_completionHandler(error, nil);
+        self.completionHandler(error, nil);
     }
     else {
         dispatch_async(dispatch_get_main_queue(), ^(void) {
-            self->_completionHandler(error, nil);
+            self.completionHandler(error, nil);
         });
     }
 }
@@ -151,13 +171,13 @@
     if(movieDict == nil)
         return nil;
 
-    NSNumber *movieIdNumber = (NSNumber *)[movieDict objectForKey:@"id"];
-    NSNumber *voteCountNumber = (NSNumber *)[movieDict objectForKey:@"vote_count"];
-    NSNumber *voteAverageNumber = (NSNumber *)[movieDict objectForKey:@"vote_average"];
-    NSString *title = [movieDict objectForKey:@"title"];
-    NSString *posterPath = [movieDict objectForKey:@"poster_path"];
-    NSString *overview = [movieDict objectForKey:@"overview"];
-    NSString *releaseDate = [movieDict objectForKey:@"release_date"];
+    NSNumber *movieIdNumber = (NSNumber *)movieDict[@"id"];
+    NSNumber *voteCountNumber = (NSNumber *)movieDict[@"vote_count"];
+    NSNumber *voteAverageNumber = (NSNumber *)movieDict[@"vote_average"];
+    NSString *title = movieDict[@"title"];
+    NSString *posterPath = movieDict[@"poster_path"];
+    NSString *overview = movieDict[@"overview"];
+    NSString *releaseDate = movieDict[@"release_date"];
     
     MovieInfo *movieInfo = (MovieInfo *)malloc(sizeof(MovieInfo));
     movieInfo->movieId = movieIdNumber.longValue;
@@ -205,19 +225,23 @@
     }
     
     free(movieInfo);
-    movieInfo = nil;
 }
 
 #pragma mark - SearchMoviesOperationDelegate methods
--(void)onSuccessWithData:(NSData*) responseData andQueryString:(NSString*)queryString andYear:(NSString*)year {
+-(void)onSuccessWithData:(NSData*) responseData
+          andQueryString:(NSString*)queryString
+                 andYear:(NSString*)year {
     NSError *parseError = nil;
-    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&parseError];
+    NSDictionary *jsonDict = [NSJSONSerialization
+                              JSONObjectWithData:responseData
+                              options:0
+                              error:&parseError];
     if (parseError == nil) {
-        NSArray *results = [jsonDict objectForKey:@"results"];
-        [self->_downloadRawResults addObjectsFromArray:results];
+        NSArray *results = jsonDict[@"results"];
+        [self.downloadRawResults addObjectsFromArray:results];
         
-        NSNumber *totalPages = [jsonDict objectForKey:@"total_pages"];
-        NSNumber *page = [jsonDict objectForKey:@"page"];
+        NSNumber *totalPages = jsonDict[@"total_pages"];
+        NSNumber *page = jsonDict[@"page"];
         
         // If current page is 1 and there are more pages, then fetch them all
         if ( page.intValue == 1 && totalPages.intValue > 1 ) {
@@ -227,19 +251,27 @@
             }
         }
     } else {
-        [self sendErrorResponseOnMainThread:DOWNLOAD_FAILED_ERROR_DOMAIN andErrorCode:RESPONSE_PARSING_ERROR andUserInfo:nil];
+        [self sendErrorResponseOnMainThread:DOWNLOAD_FAILED_ERROR_DOMAIN
+                               andErrorCode:RESPONSE_PARSING_ERROR
+                                andUserInfo:nil];
     }
 }
 
 -(void)onFailureDueToNetworkError {
-    [self sendErrorResponseOnMainThread:DOWNLOAD_FAILED_ERROR_DOMAIN andErrorCode:NETWORK_ERROR andUserInfo:nil];
+    [self sendErrorResponseOnMainThread:DOWNLOAD_FAILED_ERROR_DOMAIN
+                           andErrorCode:NETWORK_ERROR
+                            andUserInfo:nil];
 }
 
 -(void)onFailureDueToInvalidResponse {
-    [self sendErrorResponseOnMainThread:DOWNLOAD_FAILED_ERROR_DOMAIN andErrorCode:INVALID_RESPONSE_ERROR andUserInfo:nil];
+    [self sendErrorResponseOnMainThread:DOWNLOAD_FAILED_ERROR_DOMAIN
+                           andErrorCode:INVALID_RESPONSE_ERROR
+                            andUserInfo:nil];
 }
 
 -(void)onFailureDueToInvalidAPIKey {
-    [self sendErrorResponseOnMainThread:DOWNLOAD_FAILED_ERROR_DOMAIN andErrorCode:INVALID_API_KEY_ERROR andUserInfo:nil];
+    [self sendErrorResponseOnMainThread:DOWNLOAD_FAILED_ERROR_DOMAIN
+                           andErrorCode:INVALID_API_KEY_ERROR
+                            andUserInfo:nil];
 }
 @end

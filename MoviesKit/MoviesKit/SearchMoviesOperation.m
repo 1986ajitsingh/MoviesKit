@@ -23,7 +23,10 @@
     return [self initWithQueryString:nil andYear:nil andPage:nil andAPIKey:nil];
 }
 
--(id)initWithQueryString:(NSString*)queryString andYear:(NSString*)year andPage:(NSString*)page andAPIKey:(NSString*)apiKey {
+-(id)initWithQueryString:(NSString*)queryString
+                 andYear:(NSString*)year
+                 andPage:(NSString*)page
+               andAPIKey:(NSString*)apiKey {
     self = [super init];
     if (self) {
         self.queryString = queryString;
@@ -39,35 +42,61 @@
         return;
     }
     
-    NSString *escapedAPIKey = [self.apiKey stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSString *escapedqueryString = [self.queryString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSString *escapedPage = [self.page stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSString *escapedYear = [self.year stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSString *escapedAPIKey = [self.apiKey
+                               stringByAddingPercentEncodingWithAllowedCharacters:
+                               [NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSString *escapedqueryString = [self.queryString
+                                stringByAddingPercentEncodingWithAllowedCharacters:
+                                [NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSString *escapedPage = [self.page
+                             stringByAddingPercentEncodingWithAllowedCharacters:
+                             [NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSString *escapedYear = [self.year
+                             stringByAddingPercentEncodingWithAllowedCharacters:
+                             [NSCharacterSet URLQueryAllowedCharacterSet]];
 
-    NSString *finalSearchURL = [NSString stringWithFormat:MOVIES_SEARCH_URL, escapedAPIKey, escapedqueryString, escapedPage, escapedYear];
+    NSString *finalSearchURL = [NSString
+                                stringWithFormat:MOVIES_SEARCH_URL,
+                                escapedAPIKey,
+                                escapedqueryString,
+                                escapedPage,
+                                escapedYear];
     NSURL *url = [NSURL URLWithString:finalSearchURL];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL: url];
     
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     
-    NSURLSessionDataTask *task = [self.urlSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (error != nil) {
-            if ([self.delegate respondsToSelector:@selector(onFailureDueToNetworkError)] && !self.isCancelled) {
+    NSURLSessionDataTask *task = [self.urlSession
+                                  dataTaskWithRequest:request
+                                  completionHandler:^(
+                                                      NSData * _Nullable data,
+                                                      NSURLResponse * _Nullable response,
+                                                      NSError * _Nullable error) {
+        if (error) {
+            if ([self.delegate respondsToSelector:@selector(onFailureDueToNetworkError)]
+                && !self.isCancelled) {
                 [self.delegate onFailureDueToNetworkError];
             }
             
         } else {
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
             if (httpResponse.statusCode == 200) {
-                if ([self.delegate respondsToSelector:@selector(onSuccessWithData:andQueryString:andYear:)] && !self.isCancelled) {
-                    [self.delegate onSuccessWithData:data andQueryString:self.queryString andYear:self.year];
+                if ([self.delegate
+                     respondsToSelector:
+                     @selector(onSuccessWithData:andQueryString:andYear:)]
+                    && !self.isCancelled) {
+                    [self.delegate onSuccessWithData:data
+                                      andQueryString:self.queryString
+                                             andYear:self.year];
                 }
             } else if (httpResponse.statusCode == 401) {
-                if ([self.delegate respondsToSelector:@selector(onFailureDueToInvalidAPIKey)] && !self.isCancelled) {
+                if ([self.delegate respondsToSelector:@selector(onFailureDueToInvalidAPIKey)]
+                    && !self.isCancelled) {
                     [self.delegate onFailureDueToInvalidAPIKey];
                 }
             } else {
-                if ([self.delegate respondsToSelector:@selector(onFailureDueToInvalidResponse)] && !self.isCancelled) {
+                if ([self.delegate respondsToSelector:@selector(onFailureDueToInvalidResponse)]
+                    && !self.isCancelled) {
                     [self.delegate onFailureDueToInvalidResponse];
                 }
             }

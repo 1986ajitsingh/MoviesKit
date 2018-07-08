@@ -56,57 +56,50 @@
 -(long)getMovieId {
     if (self->movieInfo == nil) {
         return 0;
-    } else {
-        return self->movieInfo->movieId;
     }
+    return self->movieInfo->movieId;
 }
 
 -(int)getVoteCount {
     if (self->movieInfo == nil) {
         return 0;
-    } else {
-        return self->movieInfo->voteCount;
     }
+    return self->movieInfo->voteCount;
 }
 
 -(int)getVoteAverage {
     if (self->movieInfo == nil) {
         return 0;
-    } else {
-        return self->movieInfo->voteAverage;
     }
+    return self->movieInfo->voteAverage;
 }
 
 -(NSString*)getTitle {
     if (self->movieInfo == nil || self->movieInfo->title == nil) {
         return nil;
-    } else {
-        return [NSString stringWithUTF8String:self->movieInfo->title];
     }
+    return [NSString stringWithUTF8String:self->movieInfo->title];
 }
 
 -(NSString*)getPosterPath {
     if (self->movieInfo == nil || self->movieInfo->posterPath == nil) {
         return nil;
-    } else {
-        return [NSString stringWithUTF8String:self->movieInfo->posterPath];
     }
+    return [NSString stringWithUTF8String:self->movieInfo->posterPath];
 }
 
 -(NSString*)getOverview {
     if (self->movieInfo == nil || self->movieInfo->overview == nil) {
         return nil;
-    } else {
-        return [NSString stringWithUTF8String:self->movieInfo->overview];
     }
+    return [NSString stringWithUTF8String:self->movieInfo->overview];
 }
 
 -(NSString*)getReleaseDate {
     if (self->movieInfo == nil || self->movieInfo->releaseDate == nil) {
         return nil;
-    } else {
-        return [NSString stringWithUTF8String:self->movieInfo->releaseDate];
     }
+    return [NSString stringWithUTF8String:self->movieInfo->releaseDate];
 }
 
 @end
