@@ -17,8 +17,8 @@ Movies application in an iOS app that displays a listing of movies produced in y
 - Only used iOS Foundation and Core Foundation frameworks. Also, no third party frameworks or libraries are used. Not even for Unit Test. Have not even used OCMock for unit tests, since it was asked not to use any third party frameworks. 
 - Create a full suite of unit tests for testing MoviesKit (dynamic library) and SortMovies (static library). Code coverage is around 97.5%. 
 - Application treats API key as a secret, hence app has following security implementation for API key -
--- It saves it in the local storage in encrypted form. For this application has implemented custom crypto algorithm. 
--- It does not reads or allows user to enter API key, on Jailbroken iOS devices. 
+    - It saves it in the local storage in encrypted form. For this application has implemented custom crypto algorithm. 
+    - It does not reads or allows user to enter API key, on Jailbroken iOS devices. 
 
 ## Visual Window
 ![MoviesApp](video/movies_app_flow.gif "Movies App Flow")
@@ -71,8 +71,8 @@ Following are the high-level steps required to deploy the app on Apple App Store
 ### Post by the author: 
 -  [*Blog*](https://www.globallogic.com/blogs/author/ajit-singh/)
 - *Whitepapers*
--- [Mobile Application Architecture: React Native with Redux](https://www.globallogic.com/gl_news/mobile-application-architecture-react-native-with-redux/)
--- [A Review of React Native for Cross-platform Mobile Application Development](https://www.globallogic.com/gl_news/a-review-of-react-native-for-cross-platform/)
--- [Enabling Enterprise Collaboration Platforms with Mitel Embedded Communications (MiEC) SDK V6.0](https://www.globallogic.com/gl_news/enabling-enterprise-collaboration-platforms-with-mitel-embedded-communications-miec-sdk-v6-0/)
--- [Cashless India: Leveraging Possibilities and Facing Security Challenges In the Mobile Space](https://www.globallogic.com/gl_news/cashless-india-leveraging-possibilities-and-facing-security-challenges-in-the-mobile-space/)
--- [Smart Homes: A Deep Dive](https://www.globallogic.com/gl_news/smart-homes-a-deep-dive/)
+    - [Mobile Application Architecture: React Native with Redux](https://www.globallogic.com/gl_news/mobile-application-architecture-react-native-with-redux/)
+    - [A Review of React Native for Cross-platform Mobile Application Development](https://www.globallogic.com/gl_news/a-review-of-react-native-for-cross-platform/)
+    - [Enabling Enterprise Collaboration Platforms with Mitel Embedded Communications (MiEC) SDK V6.0](https://www.globallogic.com/gl_news/enabling-enterprise-collaboration-platforms-with-mitel-embedded-communications-miec-sdk-v6-0/)
+    - [Cashless India: Leveraging Possibilities and Facing Security Challenges In the Mobile Space](https://www.globallogic.com/gl_news/cashless-india-leveraging-possibilities-and-facing-security-challenges-in-the-mobile-space/)
+    - [Smart Homes: A Deep Dive](https://www.globallogic.com/gl_news/smart-homes-a-deep-dive/)
