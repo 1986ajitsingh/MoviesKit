@@ -18,6 +18,7 @@ let posterImageCache = NSCache<AnyObject, AnyObject>()
 // todo: add movie details screen
 // todo: add jailbroken check on settings button click and when reading
 // apikey from Userdefaults
+// Todo
 
 class ViewController: UIViewController, UITableViewDelegate {
 
@@ -228,6 +229,13 @@ extension ViewController : UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let movie = movies[indexPath.row]
+        let movieDetailsViewController:MovieDetailsViewController = self.storyboard?.instantiateViewController(withIdentifier: "MovieDetailsViewController") as! MovieDetailsViewController
+        movieDetailsViewController.movie = movie
+        self.navigationController?.pushViewController(movieDetailsViewController, animated: true)
     }
 }
 

@@ -6,7 +6,7 @@ Movies application in an iOS app that displays a listing of movies produced in y
 - Home screen shows a search text box to enter search term or keyword to search in the title of the movies. Search text box appears by swipe down gesture on the home screen. Minimum 2 characters should be entered to search. 
 - Home screen shows top 10 movies with highest rating. Movies are sorting for highest rating using the "vote average" field of the movies model data. 
 - Application attributes TMDb as the source of data and images in the application information page. Information page appears from the info button on home screen. 
-- Application needs TMDb API key to load movies data from TMDb. User must enter API key from the Configuration View. Configuration View appears from the settings button on the home screen. 
+- Application needs TMDb API key to load movies data from TMDb. User must enter API key from the Configuration View. Configuration View appears from the settings button on the home screen. You can use this test API Key: 03feb58bd1b21fa9943cf0fda5ea8f71
 - Movies Details screen should more detailed movies information title, poster, vote count, vote average, overview, and release date.
 
 ## Development Approach 

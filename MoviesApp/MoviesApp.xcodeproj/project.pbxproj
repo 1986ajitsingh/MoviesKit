@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A3B1FF520F20E76004AB127 /* MovieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3B1FF420F20E76004AB127 /* MovieDetailsViewController.swift */; };
 		743E7DD420EC8AEB00172A64 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743E7DD320EC8AEB00172A64 /* AppDelegate.swift */; };
 		743E7DD620EC8AEB00172A64 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743E7DD520EC8AEB00172A64 /* ViewController.swift */; };
 		743E7DD920EC8AEB00172A64 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 743E7DD720EC8AEB00172A64 /* Main.storyboard */; };
@@ -65,6 +66,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6A3B1FF420F20E76004AB127 /* MovieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewController.swift; sourceTree = "<group>"; };
 		743E7DD020EC8AEB00172A64 /* MoviesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoviesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		743E7DD320EC8AEB00172A64 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		743E7DD520EC8AEB00172A64 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 			children = (
 				743E7DD320EC8AEB00172A64 /* AppDelegate.swift */,
 				743E7DD520EC8AEB00172A64 /* ViewController.swift */,
+				6A3B1FF420F20E76004AB127 /* MovieDetailsViewController.swift */,
 				743E7E4420EFEEB400172A64 /* Crypto.swift */,
 				743E7E3F20EF465200172A64 /* MovieCell.swift */,
 				743E7DD720EC8AEB00172A64 /* Main.storyboard */,
@@ -277,6 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A3B1FF520F20E76004AB127 /* MovieDetailsViewController.swift in Sources */,
 				743E7E4520EFEEB400172A64 /* Crypto.swift in Sources */,
 				743E7DD620EC8AEB00172A64 /* ViewController.swift in Sources */,
 				743E7DD420EC8AEB00172A64 /* AppDelegate.swift in Sources */,
