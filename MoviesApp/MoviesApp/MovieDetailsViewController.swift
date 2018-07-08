@@ -12,7 +12,7 @@ import MoviesKit
 class MovieDetailsViewController: UIViewController {
 
     var movie: IMovie?
-    
+
     @IBOutlet weak var posterImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var voteLabel: UILabel!
@@ -28,12 +28,12 @@ class MovieDetailsViewController: UIViewController {
             self.voteLabel.text = "Vote: Total - \(movieObj.getVoteCount()) Average - \(movieObj.getVoteAverage())"
             self.releaseDateLabel.text = "Release Date: \(releaseDateStr)"
             self.overviewTextView.text = movieObj.getOverview()
-            
+
             let urlString = kImageDownloadURLPrefix + movieObj.getPosterPath()
-            let imageUrl = URL(string: urlString);
+            let imageUrl = URL(string: urlString)
             DispatchQueue.global(qos: .background).async {
                 let imageData = try? Data(contentsOf: imageUrl!)
-                if (imageData != nil) {
+                if imageData != nil {
                     let image = UIImage(data: imageData!)
                     DispatchQueue.main.async {
                         self.posterImage.image = image
@@ -49,17 +49,16 @@ class MovieDetailsViewController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let date = dateFormatter.date(from: dateStr)
-        
+
         let targetDateFormatter = DateFormatter()
         targetDateFormatter.dateFormat = "MMM dd, YYYY"
         return targetDateFormatter.string(from: date!)
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
     /*
     // MARK: - Navigation

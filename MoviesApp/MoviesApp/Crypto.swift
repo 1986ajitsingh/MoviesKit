@@ -19,9 +19,9 @@ import UIKit
 // 2. XORing the ascii value of each character with 32
 class Crypto: NSObject {
     static func encrypt(input: String) -> String {
-        var output:String = ""
+        var output: String = ""
         for char in input {
-            var finalIncrementedCharAsciiValue:UInt32 = 0
+            var finalIncrementedCharAsciiValue: UInt32 = 0
             let incrementedCharAsciiValue = char.ascii! + 32
             if incrementedCharAsciiValue > 127 {
                 finalIncrementedCharAsciiValue = incrementedCharAsciiValue - 127
@@ -34,13 +34,13 @@ class Crypto: NSObject {
         }
         return output
     }
-    
+
     static func decrypt(input: String) -> String {
-        var output:String = ""
+        var output: String = ""
         for char in input {
-            let xoredCharAsciiValue:Int = Int(char.ascii! ^ 32)
-            var finalDecrementedCharAsciiValue:UInt32 = 0
-            let decrementedCharAsciiValue:Int = Int(xoredCharAsciiValue - 32)
+            let xoredCharAsciiValue: Int = Int(char.ascii! ^ 32)
+            var finalDecrementedCharAsciiValue: UInt32 = 0
+            let decrementedCharAsciiValue: Int = Int(xoredCharAsciiValue - 32)
             if decrementedCharAsciiValue < 0 {
                 finalDecrementedCharAsciiValue = UInt32(127 + decrementedCharAsciiValue)
             } else {
@@ -56,6 +56,6 @@ class Crypto: NSObject {
 // ASCII characters have a scalar value between 0 and 127
 extension Character {
     var ascii: UInt32? {
-        return String(self).unicodeScalars.filter{$0.isASCII}.first?.value
+        return String(self).unicodeScalars.filter {$0.isASCII}.first?.value
     }
 }
