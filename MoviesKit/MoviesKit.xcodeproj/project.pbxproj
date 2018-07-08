@@ -29,6 +29,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		6A59FDFB20F266B3005A04B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 743E7E3020EE020B00172A64 /* SortMovies.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 743E7E2220EE013900172A64;
+			remoteInfo = SortMovies;
+		};
 		743E7D7020EC7E6300172A64 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 743E7D5C20EC7E6300172A64 /* Project object */;
@@ -217,6 +224,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				6A59FDFC20F266B3005A04B5 /* PBXTargetDependency */,
 			);
 			name = MoviesKit;
 			productName = MoviesKit;
@@ -363,6 +371,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		6A59FDFC20F266B3005A04B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SortMovies;
+			targetProxy = 6A59FDFB20F266B3005A04B5 /* PBXContainerItemProxy */;
+		};
 		743E7D7120EC7E6300172A64 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 743E7D6420EC7E6300172A64 /* MoviesKit */;

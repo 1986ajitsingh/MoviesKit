@@ -12,13 +12,7 @@
 #import "Movie.h"
 #import "SearchMoviesOperation.h"
 
-@interface MKMoviesDownloader() <SearchMoviesOperationDelegate> {
-@private
-//    void (^_completionHandler)(NSError *error, NSArray<IMovie> *movies);
-//    Boolean _isDownloading;
-//    NSMutableArray *_downloadRawResults;
-//    NSOperationQueue *_operationQueue;
-}
+@interface MKMoviesDownloader() <SearchMoviesOperationDelegate> 
     @property (nonatomic, strong) NSString* apiKey;
     @property (nonatomic, strong) NSOperationQueue *operationQueue;
     @property (nonatomic, strong) NSMutableArray *downloadRawResults;

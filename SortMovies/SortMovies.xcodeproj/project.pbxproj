@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		6A3B1FF720F22124004AB127 /* UniversalLib */ = {
+		6A3B1FF720F22124004AB127 /* SortMoviesUniversalLib */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 6A3B1FFA20F22124004AB127 /* Build configuration list for PBXAggregateTarget "UniversalLib" */;
+			buildConfigurationList = 6A3B1FFA20F22124004AB127 /* Build configuration list for PBXAggregateTarget "SortMoviesUniversalLib" */;
 			buildPhases = (
 				6A3B1FFB20F2212C004AB127 /* ShellScript */,
 			);
 			dependencies = (
 			);
-			name = UniversalLib;
+			name = SortMoviesUniversalLib;
 			productName = UniversalLib;
 		};
 /* End PBXAggregateTarget section */
@@ -168,7 +168,7 @@
 			targets = (
 				743E7E2220EE013900172A64 /* SortMovies */,
 				743E7E6520F1327300172A64 /* SortMoviesTest */,
-				6A3B1FF720F22124004AB127 /* UniversalLib */,
+				6A3B1FF720F22124004AB127 /* SortMoviesUniversalLib */,
 			);
 		};
 /* End PBXProject section */
@@ -195,7 +195,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# define output folder environment variable\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal\n\n# Step 1. Build Device and Simulator versions\nxcodebuild -target SortMovies ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\nxcodebuild -target SortMovies -configuration ${CONFIGURATION} -sdk iphonesimulator -arch i386 BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# Step 2. Create universal binary file using lipo\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\"\n";
+			shellScript = "# define output folder environment variable\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal\n\n# Step 1. Build Device and Simulator versions\nxcodebuild -target SortMovies ONLY_ACTIVE_ARCH=NO -configuration ${CONFIGURATION} -sdk iphoneos  BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\nxcodebuild -target SortMovies -configuration ${CONFIGURATION} -sdk iphonesimulator -arch i386 BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# Step 2. Create universal binary file using lipo\nlipo -create -output \"${PROJECT_DIR}/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/lib${PROJECT_NAME}.a\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/lib${PROJECT_NAME}.a\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -423,7 +423,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6A3B1FFA20F22124004AB127 /* Build configuration list for PBXAggregateTarget "UniversalLib" */ = {
+		6A3B1FFA20F22124004AB127 /* Build configuration list for PBXAggregateTarget "SortMoviesUniversalLib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6A3B1FF820F22124004AB127 /* Debug */,
