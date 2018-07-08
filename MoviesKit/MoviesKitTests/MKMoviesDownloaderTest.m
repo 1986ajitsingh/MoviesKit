@@ -136,10 +136,10 @@
     // Arrange
     MockMKMoviesDownloader *moviesDownloader = [[MockMKMoviesDownloader alloc] initWithAPIKey:@"some api key"];
     void (^expectedCompletionHandler)(NSError *error, NSArray<IMovie> *movies) = ^void (NSError *error, NSArray<IMovie> *movies) {};
-    [moviesDownloader setValue:nil forKey:@"downloadRawResults"];
+    [moviesDownloader setValue:nil forKey:@"_downloadRawResults"];
     NSString *testQueryString = @"Batman";
     MockOperationQueue *operationQueue = [[MockOperationQueue alloc] init];
-    [moviesDownloader setValue:operationQueue forKey:@"operationQueue"];
+    [moviesDownloader setValue:operationQueue forKey:@"_operationQueue"];
 
     // Act
     [moviesDownloader downloadLatestMoviesForSearchFilter:testQueryString withCompletionHandler:expectedCompletionHandler];
@@ -153,7 +153,7 @@
     NSNumber* isDownloadNumberValue = [moviesDownloader valueForKey:@"_isDownloading"];
     XCTAssertTrue(isDownloadNumberValue.boolValue);
     
-    NSMutableArray* downloadRawResults = [moviesDownloader valueForKey:@"downloadRawResults"];
+    NSMutableArray* downloadRawResults = [moviesDownloader valueForKey:@"_downloadRawResults"];
     XCTAssertNotNil(downloadRawResults);
     
     XCTAssertTrue(moviesDownloader.startOperationWithQueryStringCalledCount == 2);
@@ -186,7 +186,7 @@
     moviesDownloader.proceedToSortingResultsShouldCallSuper = YES;
     NSArray *resultInput = @[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11", @"12", @"13", @"14", @"15"];
     NSMutableArray *testDownloadRawResults = [[NSMutableArray alloc] initWithObjects:@"1", @"2", nil];
-    [moviesDownloader setValue:testDownloadRawResults forKey:@"downloadRawResults"];
+    [moviesDownloader setValue:testDownloadRawResults forKey:@"_downloadRawResults"];
     
     // Act
     [moviesDownloader proceedToSortingResults:resultInput];
@@ -228,7 +228,7 @@
     NSString *testAPIKey = @"Some test key";
     MKMoviesDownloader *moviesDownloader = [[MKMoviesDownloader alloc] initWithAPIKey:testAPIKey];
     MockOperationQueue *operationQueue = [[MockOperationQueue alloc] init];
-    [moviesDownloader setValue:operationQueue forKey:@"operationQueue"];
+    [moviesDownloader setValue:operationQueue forKey:@"_operationQueue"];
     
     // Act
     [moviesDownloader startOperationWithQueryString:testQueryString andYear:testYear andPage:testPage];
@@ -254,7 +254,7 @@
     };
     [moviesDownloader setValue:_completionHandler forKey:@"_completionHandler"];
     MockOperationQueue *operationQueue = [[MockOperationQueue alloc] init];
-    [moviesDownloader setValue:operationQueue forKey:@"operationQueue"];
+    [moviesDownloader setValue:operationQueue forKey:@"_operationQueue"];
     
     // Act
     [moviesDownloader sendErrorResponseOnMainThread:testErrorDomain andErrorCode:NETWORK_ERROR andUserInfo:nil];
@@ -392,7 +392,7 @@
     }";
     NSData *responseData = [response dataUsingEncoding:NSUTF8StringEncoding];
     NSMutableArray *testDownloadRawResults = [[NSMutableArray alloc] init];
-    [moviesDownloader setValue:testDownloadRawResults forKey:@"downloadRawResults"];
+    [moviesDownloader setValue:testDownloadRawResults forKey:@"_downloadRawResults"];
     
     // Act
     [moviesDownloader onSuccessWithData:responseData andQueryString:testQueryString andYear:testYear];

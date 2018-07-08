@@ -16,9 +16,8 @@
 @private
     void (^_completionHandler)(NSError *error, NSArray<IMovie> *movies);
     Boolean _isDownloading;
-    //todo: use consistant naming., use _ in data member names
-    NSMutableArray *downloadRawResults;
-    NSOperationQueue *operationQueue;
+    NSMutableArray *_downloadRawResults;
+    NSOperationQueue *_operationQueue;
 }
 @property (nonatomic, strong) NSString* apiKey;
 @end
@@ -33,8 +32,8 @@
     self = [super init];
     if (self) {
         self.apiKey = apiKey;
-        operationQueue = [[NSOperationQueue alloc] init];
-        operationQueue.maxConcurrentOperationCount = 5;
+        _operationQueue = [[NSOperationQueue alloc] init];
+        _operationQueue.maxConcurrentOperationCount = 5;
     }
     return self;
 }
@@ -64,19 +63,19 @@
     }
     
     self->_isDownloading = true;
-    self->downloadRawResults = [[NSMutableArray alloc] init];
+    self->_downloadRawResults = [[NSMutableArray alloc] init];
     
     [self startOperationWithQueryString:searchFilter andYear:YEAR_2018 andPage:@"1"];
     [self startOperationWithQueryString:searchFilter andYear:YEAR_2017 andPage:@"1"];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self->operationQueue waitUntilAllOperationsAreFinished];
+        [self->_operationQueue waitUntilAllOperationsAreFinished];
         // Control will come here once all the download operations are complete
         // hence, proceed to sorting the results from here.
         // check if state is still isDownloading,
         // if not then it means, there was an error hence do nothing
         if (self->_isDownloading) {
-            [self proceedToSortingResults:self->downloadRawResults];
+            [self proceedToSortingResults:self->_downloadRawResults];
         }
     });
 }
@@ -108,8 +107,8 @@
             }
         }
         
-        // Clear the downloadRawResults and movies array since it's no more required
-        [self->downloadRawResults removeAllObjects];
+        // Clear the _downloadRawResults and movies array since it's no more required
+        [self->_downloadRawResults removeAllObjects];
         free(movies);
         
         [self finishWithFinalMoviesList:topRated10OrLessMovies];
@@ -128,13 +127,13 @@
     SearchMoviesOperation *operation = [[SearchMoviesOperation alloc] initWithQueryString:queryString andYear:year andPage:page andAPIKey:self.apiKey];
     operation.urlSession = [NSURLSession sharedSession];
     operation.delegate = self;
-    [self->operationQueue addOperation:operation];
+    [self->_operationQueue addOperation:operation];
 }
 
 -(void)sendErrorResponseOnMainThread:(NSString*)errorDomain andErrorCode:(DownloadErrorCodes)errorCode andUserInfo:(NSDictionary*)userInfo {
     
     self->_isDownloading = false;
-    [self->operationQueue cancelAllOperations];
+    [self->_operationQueue cancelAllOperations];
     
     NSError *error = [[NSError alloc] initWithDomain:errorDomain code:errorCode userInfo:userInfo];
     if ([NSThread isMainThread]) {
@@ -215,7 +214,7 @@
     NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&parseError];
     if (parseError == nil) {
         NSArray *results = [jsonDict objectForKey:@"results"];
-        [self->downloadRawResults addObjectsFromArray:results];
+        [self->_downloadRawResults addObjectsFromArray:results];
         
         NSNumber *totalPages = [jsonDict objectForKey:@"total_pages"];
         NSNumber *page = [jsonDict objectForKey:@"page"];

@@ -15,10 +15,8 @@ let kDefaultMoviesFilterString = "Batman"
 
 let posterImageCache = NSCache<AnyObject, AnyObject>()
 
-// todo: add movie details screen
 // todo: add jailbroken check on settings button click and when reading
 // apikey from Userdefaults
-// Todo
 
 class ViewController: UIViewController, UITableViewDelegate {
 
